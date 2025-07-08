@@ -83,23 +83,23 @@ class NeuralNetwork:
         y_pred = self.forward(X)
         return np.argmax(y_pred, axis=1)
 
-# === Training Execution ===
+
 if __name__ == "__main__":
-    input_size = 784  # 28x28 images
+    input_size = 784 
     hidden_size = 64
     output_size = 10
     learning_rate = 0.1
 
-    # Load and preprocess data
+    
     X_train, y_train, X_test, y_test = NeuralNetwork.load_data('mnist_train.csv', 'mnist_test.csv')
     y_train_encoded = NeuralNetwork.one_hot_encode(y_train, output_size)
     y_test_encoded = NeuralNetwork.one_hot_encode(y_test, output_size)
 
-    # Initialize and train the network
+    
     nn = NeuralNetwork(input_size, hidden_size, output_size, learning_rate)
     nn.train(X_train, y_train_encoded, epochs=1000)
 
-    # Evaluate
+    
     y_test_pred = nn.forward(X_test)
     test_acc = NeuralNetwork.accuracy(y_test_encoded, y_test_pred)
     print(f"Test Accuracy: {test_acc * 100:.2f}%")
