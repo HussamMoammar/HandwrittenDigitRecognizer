@@ -31,6 +31,36 @@ class NeuralNetwork:
     @staticmethod
     def sigmoid(z):
         return 1 / (1 + np.exp(-z))
-
+    
+    @staticmethod
+    def sigmoid_derivative(a):
+        return a * (1 - a)
+    
+    def forward(self, X):
+        self.z1 = np.dot(X, self.W1) + self.b1
+        self.a1 = self.sigmoid(self.z1)
+        self.z2 = np.dot(self.a1, self.W2) + self.b2
+        self.a2 = self.softmax(self.z2)
+        return self.a2
+    
+    def backward(self, X, y_true, y_pred):
+        m = X.shape[0]
+        
+        dz2 = y_pred - y_true
+        dW2 = np.dot(self.a1.T, dz2) / m
+        db2 = np.sum(dz2, axis=0, keepdims=True) / m
+        
+        dz1 = np.dot(dz2, self.W2.T) * self.sigmoid_derivative(self.a1)
+        dW1 = np.dot(X.T, dz1) / m
+        db1 = np.sum(dz1, axis=0, keepdims=True) / m
+        
+        self.W1 -= self.learning_rate * dW1
+        self.b1 -= self.learning_rate * db1
+        self.W2 -= self.learning_rate * dW2
+        self.b2 -= self.learning_rate * db2
+    
+    
+    
+    
 if __name__ == "__main__":
     pass
