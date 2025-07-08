@@ -8,6 +8,18 @@ class NeuralNetwork:
         self.W2 = np.random.randn(hidden_size, output_size) * 0.01
         self.b2 = np.zeros((1, output_size))
         self.learning_rate = learning_rate
+        
+        
+    @staticmethod
+    def load_data(train_csv, test_csv):
+        test_data = pd.read_csv(test_csv)
+        train_data = pd.read_csv(train_csv)
+        X_train = train_data.drop(columns=['lables']).values / 255.0
+        Y_train = test_data['lables'].values
+        X_test = train_data.drop(columns=['lables']).values / 255.0
+        Y_test = test_data['lables'].values
+        return X_train, Y_train, X_test, Y_test
+    
     
 
 if __name__ == "__main__":
