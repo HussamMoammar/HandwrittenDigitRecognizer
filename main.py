@@ -9,7 +9,6 @@ class NeuralNetwork:
         self.b2 = np.zeros((1, output_size))
         self.learning_rate = learning_rate
         
-        
     @staticmethod
     def load_data(train_csv, test_csv):
         test_data = pd.read_csv(test_csv)
@@ -19,6 +18,10 @@ class NeuralNetwork:
         X_test = train_data.drop(columns=['lables']).values / 255.0
         Y_test = test_data['lables'].values
         return X_train, Y_train, X_test, Y_test
+    
+    @staticmethod
+    def on_hot_encode(y, num_classes):
+        return np.eye(num_classes)[y]
     
     
 
