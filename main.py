@@ -23,7 +23,14 @@ class NeuralNetwork:
     def on_hot_encode(y, num_classes):
         return np.eye(num_classes)[y]
     
-    
+    @staticmethod
+    def softmax(z):
+        exp_z = np.exp(z - np.max(z, axis=1, keepdims=True))
+        return exp_z / np.sum(exp_z, axis=1, keepdims=True)
+
+    @staticmethod
+    def sigmoid(z):
+        return 1 / (1 + np.exp(-z))
 
 if __name__ == "__main__":
     pass
